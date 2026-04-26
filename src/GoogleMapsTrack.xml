@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="codeici.googlemapstrack.GoogleMapsTrack" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Google Maps Track</name>
+    <description>Google Maps Tracker</description>
+    <studioProCategory>Mapping</studioProCategory>
+    <icon>PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjYgNiA1MiA1MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN0VDOEZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgPHBhdGggZD0iTTYgMTQgTDI0IDggVjUwIEw2IDU2IFoiIC8+CiAgPHBhdGggZD0iTTI0IDggTDQyIDE2IFY1OCBMMjQgNTAgWiIgLz4KICA8cGF0aCBkPSJNNDIgMTYgTDU4IDEwIFY1MiBMNDIgNTggWiIgLz4KICA8cGF0aCBkPSJNMTggMjQgYTQgNCAwIDEgMSA4IDAgYzAgMyAtNCA3IC00IDcgcy00IC00IC00IC03eiIgLz4KICA8Y2lyY2xlIGN4PSIyMiIgY3k9IjI0IiByPSIxLjUiIC8+CiAgPHBhdGggZD0iTTMyIDMyIGE0IDQgMCAxIDEgOCAwIGMwIDMgLTQgNyAtNCA3IHMtNCAtNCAtNCAtN3oiIC8+CiAgPGNpcmNsZSBjeD0iMzYiIGN5PSIzMiIgcj0iMS41IiAvPgogIDxwYXRoIGQ9Ik00NCAyNiBhNCA0IDAgMSAxIDggMCBjMCAzIC00IDcgLTQgNyBzLTQgLTQgLTQgLTd6IiAvPgogIDxjaXJjbGUgY3g9IjQ4IiBjeT0iMjYiIHI9IjEuNSIgLz4KPC9zdmc+</icon>
+    <properties>
+        <propertyGroup caption="Map Configuration">
+            <propertyGroup caption="Google API and Map ID">
+                <property key="apiKey" type="expression" required="true">
+                    <caption>API Key</caption>
+                    <description>Google Maps API Key - https://developers.google.com/maps/documentation/javascript</description>
+                    <returnType type="String"/>
+                </property>
+                <property key="mapId" type="expression" required="true">
+                    <caption>Map ID</caption>
+                    <description>Google Maps Map ID - https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over</description>
+                    <returnType type="String"/>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Map Size, Zoom Level and Position">
+                <property key="minWidth" type="integer" defaultValue="400" required="true">
+                    <caption>Minimum Width (px)</caption>
+                    <description>Minimum width of the map in pixels</description>
+                </property>
+                <property key="minHeight" type="integer" defaultValue="300" required="true">
+                    <caption>Minimum Height (px)</caption>
+                    <description>Minimum height of the map in pixels</description>
+                </property>
+                <property key="defaultZoom" type="integer" defaultValue="10" required="true">
+                    <caption>Default Zoom Level</caption>
+                    <description>Initial map zoom level (1-20)</description>
+                </property>
+                <property key="defaultLatitude" type="decimal" defaultValue="51.5074" required="true">
+                    <caption>Default Latitude</caption>
+                    <description>Default map center latitude when no track data is loaded</description>
+                </property>
+                <property key="defaultLongitude" type="decimal" defaultValue="-0.1278" required="true">
+                    <caption>Default Longitude</caption>
+                    <description>Default map center longitude when no track data is loaded</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Display Options">
+                <property key="showAltitudeLegend" type="boolean" defaultValue="true">
+                    <caption>Show Altitude Legend</caption>
+                    <description>Show the altitude colour legend bar on the map when Colour by Altitude is enabled</description>
+                </property>
+                <property key="showMapTypeControl" type="boolean" defaultValue="false">
+                    <caption>Show Map Type Selector</caption>
+                    <description>Show the Google Maps built-in map type selector control on the map</description>
+                </property>
+            </propertyGroup>
+        </propertyGroup>
+        <propertyGroup caption="Track Data">
+            <propertyGroup caption="Data Source">
+                <property key="trackData" type="datasource" isList="true" required="false">
+                    <caption>Track Data Source</caption>
+                    <description>List of objects containing track point coordinates</description>
+                </property>
+                <property key="refreshInterval" type="integer" defaultValue="0" required="true">
+                    <caption>Refresh Interval (seconds)</caption>
+                    <description>How often to reload the track data source in seconds. Set to 0 to disable automatic refresh.</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Data Attributes">            
+                <property key="latitude" type="attribute" dataSource="trackData" required="true">
+                    <caption>Latitude</caption>
+                    <description>Attribute containing the latitude value</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="longitude" type="attribute" dataSource="trackData" required="true">
+                    <caption>Longitude</caption>
+                    <description>Attribute containing the longitude value</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="direction" type="attribute" dataSource="trackData" required="false">
+                    <caption>Direction</caption>
+                    <description>Attribute containing the direction of travel of the object in degrees (0-360) True North</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="groundSpeed" type="attribute" dataSource="trackData" required="false">
+                    <caption>Ground Speed</caption>
+                    <description>Attribute containing the ground speed of the object</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="speedUnit" type="enumeration" defaultValue="kts">
+                    <caption>Speed Unit</caption>
+                    <description>Unit used to display ground speed values</description>
+                    <enumerationValues>
+                        <enumerationValue key="mph">mph</enumerationValue>
+                        <enumerationValue key="kmh">km/h</enumerationValue>
+                        <enumerationValue key="kts">Knots</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="verticalRate" type="attribute" dataSource="trackData" required="false">
+                    <caption>Vertical Rate</caption>
+                    <description>Rate of altitude change in feet per minute (readsb baro_rate or geom_rate). Used to extrapolate altitude between updates.</description>
+                    <attributeTypes>
+                        <attributeType name="Integer"/>
+                    </attributeTypes>
+                </property>
+                <property key="trackRate" type="attribute" dataSource="trackData" required="false">
+                    <caption>Track Rate</caption>
+                    <description>Rate of heading change in degrees per second (readsb track_rate). Used to extrapolate heading through turns.</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="positionAge" type="attribute" dataSource="trackData" required="false">
+                    <caption>Position Age</caption>
+                    <description>Age of the reported position in seconds at ingest time (readsb seen_pos). Used to back-date positions for accurate dead reckoning and staleness.</description>
+                    <attributeTypes>
+                        <attributeType name="Decimal"/>
+                    </attributeTypes>
+                </property>
+                <property key="altitude" type="attribute" dataSource="trackData" required="false">
+                    <caption>Altitude</caption>
+                    <description>Attribute containing the altitude of the object (numeric value or 'ground')</description>
+                    <attributeTypes>
+                        <attributeType name="String"/>
+                    </attributeTypes>
+                </property>
+                <property key="category" type="attribute" dataSource="trackData" required="false">
+                    <caption>Category</caption>
+                    <description>Attribute containing a category value used to style markers</description>
+                    <attributeTypes>
+                        <attributeType name="String"/>
+                    </attributeTypes>
+                </property>
+                <property key="uniqueId" type="attribute" dataSource="trackData" required="false">
+                    <caption>Unique ID</caption>
+                    <description>Attribute containing a stable unique identifier (e.g. ICAO hex code)</description>
+                    <attributeTypes>
+                        <attributeType name="String"/>
+                    </attributeTypes>
+                </property>
+            </propertyGroup>        
+        </propertyGroup>
+        <propertyGroup caption="Marker Options">
+            <propertyGroup caption="Marker">
+                <property key="markerIcon" type="image" required="false">
+                    <caption>Default Marker Image</caption>
+                    <description>Custom marker image used when no category-specific icon is matched</description>
+                </property>
+
+                <property key="markerSize" type="integer" defaultValue="32" required="true">
+                    <caption>Marker Size (px)</caption>
+                    <description>Base size of the marker icon in pixels before scale is applied</description>
+                </property>
+                <property key="markerIconScale" type="decimal" defaultValue="1.0" required="true">
+                    <caption>Default Marker Scale</caption>
+                    <description>Size multiplier for the default marker image (e.g. 0.5 = half size, 2.0 = double size)</description>
+                </property>
+                <property key="categoryIcons" type="object" isList="true" required="false">
+                    <caption>Category Icons</caption>
+                    <description>Map category values to custom marker images. The Category value must match exactly.</description>
+                    <properties>
+                        <propertyGroup caption="Category Icon">
+                            <property key="categoryName" type="string" required="true">
+                                <caption>Category</caption>
+                                <description>The category value to match (case-sensitive)</description>
+                            </property>
+                            <property key="categoryIcon" type="image" required="true">
+                                <caption>Icon</caption>
+                                <description>Marker image to use for this category</description>
+                            </property>
+                            <property key="scale" type="decimal" defaultValue="1.0" required="true">
+                                <caption>Scale</caption>
+                                <description>Size multiplier for this marker image (e.g. 0.5 = half size, 2.0 = double size)</description>
+                            </property>
+                        </propertyGroup>
+                    </properties>
+                </property>
+                <property key="colourByAltitude" type="boolean" defaultValue="false">
+                    <caption>Colour by Altitude</caption>
+                    <description>When enabled, marker colour is set by the object's altitude rather than its category</description>
+                </property>
+                <property key="markerLabel" type="expression" dataSource="trackData" required="false">
+                    <caption>Marker Label</caption>
+                    <description>Expression for an optional label shown for each marker</description>
+                    <returnType type="String"/>
+                </property>
+            </propertyGroup>       
+        </propertyGroup>
+        <propertyGroup caption="Identify Marker">
+            <property key="identId" type="attribute" required="false">
+                <caption>Object ID to Identify</caption>
+                <description>When set to the unique ID of a displayed marker, that marker will flash to identify itself.</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+            <property key="proximityMarker" type="attribute" required="false">
+                <caption>Proximity Marker</caption>
+                <description>When set to the unique ID of a displayed marker, that marker will show a bright orange ring around it.</description>
+                <attributeTypes>
+                    <attributeType name="String"/>
+                </attributeTypes>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="On Click">
+            <propertyGroup caption="On Select">
+                <property key="onClickAction" type="action" dataSource="trackData" required="false">
+                    <caption>On Select</caption>
+                    <description>Action to execute when a marker is selected</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="On Deselect">
+                <property key="onDeselectAction" type="action" dataSource="trackData" required="false">
+                    <caption>On Deselect</caption>
+                    <description>Action to execute when a selected marker is clicked to deselect it</description>
+                </property>
+            </propertyGroup>
+                <propertyGroup caption="On Track">
+                    <property key="onTrackAction" type="action" dataSource="trackData" required="false">
+                    <caption>On Track</caption>
+                    <description>Action to execute when a marker is double-clicked (fires regardless of selection state)</description>
+                </property>
+            </propertyGroup>
+        </propertyGroup>    
+    </properties>
+</widget>
