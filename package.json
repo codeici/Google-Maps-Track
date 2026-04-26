@@ -3,7 +3,7 @@
   "widgetName": "GoogleMapsTrack",
   "version": "1.0.0",
   "description": "Google Maps Tracker",
-  "copyright": "None",
+  "copyright": "codeici 2026",
   "author": "codeici",
   "engines": {
     "node": ">=16"
