@@ -1,6 +1,18 @@
 # Google Maps Track Widget — Overview
 The **Google Maps Track widget** is a Mendix pluggable widget that embeds an interactive Google Maps instance inside a Mendix application. It is purpose-built for tracking and displaying multiple moving objects on a map in near real-time.
 
+See CONFIGURATION.md for Widget Configuration
+
+---
+## After cloning
+Restore node_modules from package-lock.json
+
+npm install      
+
+Generates dist/ + the .mpk
+
+npm run build    
+
 ---
 
 ## Core Purpose
